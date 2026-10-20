@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saibaba Kola | Cloud Engineer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+.my-profile-pic { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius); position: relative; z-index: 2; display: block; }
+:root{
+    --primary:#6c5ce7;--primary-light:#a29bfe;--primary-dark:#5a4bd1;
+    --secondary:#00cec9;--accent:#fd79a8;
+    --bg-dark:#0a0a1a;--bg-card:#111127;--bg-section:#0d0d22;
+    --text-primary:#fff;--text-secondary:#b2b2d0;--text-muted:#6c6c8a;
+    --border:#1e1e3f;
+    --gradient-1:linear-gradient(135deg,#6c5ce7,#00cec9);
+    --gradient-2:linear-gradient(135deg,#fd79a8,#6c5ce7);
+    --shadow-glow:0 0 30px rgba(108,92,231,.3);
+    --radius:16px;--radius-sm:8px;
+    --transition:all .3s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:'Inter',sans-serif;background:var(--bg-dark);color:var(--text-primary);overflow-x:hidden;line-height:1.7;cursor:none}
+a{text-decoration:none;color:inherit}ul{list-style:none}button{cursor:pointer;border:none;outline:none}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+.cursor-dot{width:8px;height:8px;background:var(--primary);border-radius:50%;position:fixed;pointer-events:none;z-index:10000;transition:transform .1s}
+.cursor-outline{width:36px;height:36px;border:2px solid var(--primary-light);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transition:transform .15s,width .3s,height .3s;transform:translate(-14px,-14px)}
+#particleCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+/*
+#loader{position:fixed;inset:0;background:var(--bg-dark);display:flex;align-items:center;justify-content:center;z-index:99999;transition:opacity .5s,visibility .5s}
+#loader.hidden{opacity:0;visibility:hidden}
+.loader-content{text-align:center}
+.cloud-loader i{font-size:60px;background:var(--gradient-1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:float 2s ease-in-out infinite}
+.loader-text{margin-top:20px;font-family:'JetBrains Mono',monospace;color:var(--text-secondary);font-size:14px}
+.loader-bar{width:200px;height:3px;background:var(--border);border-radius:10px;margin:16px auto 0;overflow:hidden}
+.loader-progress{height:100%;width:0%;background:var(--gradient-1);border-radius:10px;animation:loadProgress 2s ease-in-out forwards}
+@keyframes loadProgress{to{width:100%}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+*/
+#navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 0;transition:var(--transition);background:transparent}
+#navbar.scrolled{background:rgba(10,10,26,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:10px 0}
+.nav-container{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-size:24px;font-weight:800;font-family:'JetBrains Mono',monospace}
+.logo-bracket{color:var(--primary)}.logo-slash{color:var(--secondary)}
+.nav-links{display:flex;gap:32px}
+.nav-link{font-size:14px;font-weight:500;color:var(--text-secondary);transition:var(--transition);position:relative;padding:4px 0}
+.nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:var(--gradient-1);transition:width .3s}
+.nav-link:hover,.nav-link.active{color:var(--text-primary)}
+.nav-link:hover::after,.nav-link.active::after{width:100%}
+.nav-cta{padding:10px 24px;background:var(--gradient-1);border-radius:50px;font-size:14px;font-weight:600;transition:var(--transition)}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:var(--shadow-glow)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001}
+.hamburger span{width:28px;height:2px;background:var(--text-primary);transition:var(--transition)}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.mobile-menu{position:fixed;top:0;right:-100%;width:300px;height:100vh;background:var(--bg-card);z-index:999;padding:100px 40px;transition:right .4s;border-left:1px solid var(--border)}
+.mobile-menu.active{right:0}
+.mobile-nav-links{display:flex;flex-direction:column;gap:24px}
+.mobile-nav-link{font-size:18px;font-weight:500;color:var(--text-secondary);transition:var(--transition)}
+.mobile-nav-link:hover{color:var(--primary);padding-left:10px}
+
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;z-index:1;padding:120px 0 80px}
+.hero-container{max-width:1200px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:rgba(108,92,231,.1);border:1px solid rgba(108,92,231,.3);border-radius:50px;font-size:13px;color:var(--primary-light);margin-bottom:24px;animation:pulse-border 2s infinite}
+@keyframes pulse-border{0%,100%{border-color:rgba(108,92,231,.3)}50%{border-color:rgba(108,92,231,.8)}}
+.greeting{display:block;font-size:18px;color:var(--text-secondary);margin-bottom:8px}
+.name{display:block;font-size:clamp(36px,5vw,64px);font-weight:900;background:var(--gradient-1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1;margin-bottom:8px}
+.role-wrapper{display:block;font-size:clamp(20px,3vw,32px);font-weight:600;margin-top:8px}
+.typed-text{color:var(--secondary)}
+.cursor-blink{color:var(--primary);animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.hero-description{font-size:16px;color:var(--text-secondary);margin:24px 0 32px;max-width:540px;line-height:1.8}
+.hero-description strong{color:var(--primary-light)}
+.hero-buttons{display:flex;gap:16px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:50px;font-size:14px;font-weight:600;transition:var(--transition)}
+.btn-primary{background:var(--gradient-1);color:white}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:var(--shadow-glow)}
+.btn-secondary{background:rgba(108,92,231,.1);border:1px solid var(--primary);color:var(--primary-light)}
+.btn-secondary:hover{background:rgba(108,92,231,.2);transform:translateY(-3px)}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text-secondary)}
+.btn-outline:hover{border-color:var(--primary);color:var(--primary-light);transform:translateY(-3px)}
+.hero-stats{display:flex;align-items:center;gap:32px;margin-top:48px;padding-top:32px;border-top:1px solid var(--border)}
+.stat-item{text-align:center}
+.stat-number{font-size:32px;font-weight:800;background:var(--gradient-1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-plus{font-size:24px;font-weight:800;color:var(--secondary)}
+.stat-label{display:block;font-size:12px;color:var(--text-muted);margin-top:4px;text-transform:uppercase;letter-spacing:1px}
+.stat-divider{width:1px;height:40px;background:var(--border)}
+.hero-visual{display:flex;justify-content:center;align-items:center}
+.cloud-architecture{width:400px;height:400px;position:relative}
+.arch-node{position:absolute;width:72px;height:72px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg-card);border:2px solid var(--border);transition:var(--transition);z-index:2}
+.arch-node i{font-size:22px;margin-bottom:2px}
+.arch-node span{font-size:9px;font-weight:600;text-transform:uppercase}
+.arch-node:hover{transform:scale(1.15);border-color:var(--primary);box-shadow:var(--shadow-glow)}
+.node-center{top:50%;left:50%;transform:translate(-50%,-50%);width:90px;height:90px;background:var(--gradient-1);border:none;animation:pulse 3s infinite}
+.node-center i{font-size:28px;color:white}.node-center span{color:white}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(108,92,231,.4)}50%{box-shadow:0 0 0 20px rgba(108,92,231,0)}}
+.node-1{top:5%;left:50%}.node-1 i{color:#ff9900}
+.node-2{top:18%;right:8%}.node-2 i{color:#0078d4}
+.node-3{bottom:18%;right:8%}.node-3 i{color:#2496ed}
+.node-4{bottom:5%;left:50%}.node-4 i{color:#326ce5}
+.node-5{bottom:18%;left:8%}.node-5 i{color:#f05032}
+.node-6{top:18%;left:8%}.node-6 i{color:#00cec9}
+.connection-lines{position:absolute;inset:0;z-index:1}
+.conn-line{stroke:var(--border);stroke-width:1.5;stroke-dasharray:8,4;animation:dash 20s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-1000}}
+.scroll-indicator{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;animation:bounce 2s infinite}
+.mouse{width:24px;height:38px;border:2px solid var(--text-muted);border-radius:12px;position:relative}
+.wheel{width:4px;height:8px;background:var(--primary);border-radius:2px;position:absolute;top:6px;left:50%;transform:translateX(-50%);animation:scroll-wheel 2s infinite}
+@keyframes scroll-wheel{0%{opacity:1;transform:translateX(-50%) translateY(0)}100%{opacity:0;transform:translateX(-50%) translateY(12px)}}
+.scroll-indicator span{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:2px}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+.section-header{text-align:center;margin-bottom:60px}
+.section-tag{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;background:rgba(108,92,231,.1);border:1px solid rgba(108,92,231,.2);border-radius:50px;font-size:13px;color:var(--primary-light);margin-bottom:16px}
+.section-title{font-size:clamp(28px,4vw,42px);font-weight:800;margin-bottom:16px}
+.section-line{width:60px;height:4px;background:var(--gradient-1);border-radius:2px;margin:0 auto}
+.section-subtitle{color:var(--text-secondary);max-width:600px;margin:20px auto 0;font-size:15px}
+
+.about{padding:100px 0;position:relative;z-index:1;background:var(--bg-section)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.image-wrapper{position:relative;width:300px;height:360px;margin:0 auto}
+.image-placeholder{width:100%;height:100%;background:var(--gradient-1);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;position:relative;z-index:2}
+.image-placeholder i{font-size:100px;color:white;opacity:.8}
+.image-decoration{position:absolute;inset:15px -15px -15px 15px;border:3px solid var(--primary);border-radius:var(--radius);z-index:1}
+.image-dots{position:absolute;top:-20px;right:-30px;width:80px;height:80px;background-image:radial-gradient(var(--primary) 2px,transparent 2px);background-size:12px 12px}
+.about-info-cards{display:flex;gap:16px;margin-top:30px;justify-content:center}
+.info-card{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm)}
+.info-card i{font-size:20px;color:var(--primary)}
+.info-card strong{display:block;font-size:13px}
+.info-card span{font-size:11px;color:var(--text-muted)}
+.about-subtitle{font-size:24px;font-weight:700;margin-bottom:20px;background:var(--gradient-1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.about-text{color:var(--text-secondary);margin-bottom:16px;font-size:15px}
+.about-text strong{color:var(--primary-light)}
+.about-highlights{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+.highlight-item{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-secondary)}
+.highlight-item i{color:var(--secondary);font-size:16px}
+
+/* SKILLS */
+.skills{padding:100px 0;position:relative;z-index:1}
+.skills-categories{display:flex;flex-direction:column;gap:50px}
+.skill-category{display:grid;grid-template-columns:240px 1fr;gap:32px;align-items:start}
+.category-heading{position:sticky;top:100px}
+.category-heading-row{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.category-heading-row i{font-size:28px}
+.category-heading-row.cloud-row i{color:#ff9900}
+.category-heading-row.devops-row i{color:#2496ed}
+.category-heading-row.prog-row i{color:#3776ab}
+.category-heading-row.db-row i{color:#336791}
+.category-heading-row.os-row i{color:#fcc624}
+.category-heading-row.monitor-row i{color:#f19825}
+.category-heading h3{font-size:20px;font-weight:700}
+.category-heading p{font-size:13px;color:var(--text-muted);line-height:1.5}
+.category-line{width:40px;height:3px;background:var(--gradient-1);border-radius:2px;margin-top:10px}
+.category-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}
+.skill-box{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:var(--transition);position:relative;overflow:hidden;text-align:center}
+.skill-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient-1);opacity:0;transition:opacity .3s}
+.skill-box:hover{transform:translateY(-4px);border-color:var(--primary);box-shadow:var(--shadow-glow)}
+.skill-box:hover::before{opacity:1}
+.skill-box-icon{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 10px}
+.skill-box h4{font-size:13px;font-weight:600;color:var(--text-secondary)}
+.icon-aws{background:rgba(255,153,0,.1);color:#ff9900}
+.icon-azure{background:rgba(0,120,212,.1);color:#0078d4}
+.icon-terraform{background:rgba(98,60,234,.1);color:#623ce4}
+.icon-docker{background:rgba(36,150,237,.1);color:#2496ed}
+.icon-k8s{background:rgba(50,108,229,.1);color:#326ce5}
+.icon-ansible{background:rgba(238,0,0,.1);color:#ee0000}
+.icon-github-actions{background:rgba(32,136,255,.1);color:#2088ff}
+.icon-jenkins{background:rgba(209,53,48,.1);color:#d13530}
+.icon-python{background:rgba(55,118,171,.1);color:#3776ab}
+.icon-bash{background:rgba(78,170,37,.1);color:#4eaa25}
+.icon-mysql{background:rgba(0,117,143,.1);color:#00758f}
+.icon-postgresql{background:rgba(51,103,145,.1);color:#336791}
+.icon-dynamodb{background:rgba(255,153,0,.1);color:#ff9900}
+.icon-windows{background:rgba(0,120,212,.1);color:#0078d4}
+.icon-linux{background:rgba(252,198,36,.1);color:#fcc624}
+.icon-prometheus{background:rgba(230,82,46,.1);color:#e6522c}
+.icon-grafana{background:rgba(241,152,37,.1);color:#f19825}
+.icon-cloudwatch{background:rgba(255,153,0,.1);color:#ff9900}
+.icon-azuremonitor{background:rgba(0,120,212,.1);color:#0078d4}
+
+/* ========== PROJECTS — EXPAND FULL WIDTH ========== */
+.projects{padding:100px 0;position:relative;z-index:1}
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:start}
+
+.project-card{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    overflow:hidden;
+    transition:var(--transition);
+    cursor:pointer;
+    grid-column:span 1;
+}
+.project-card:hover{border-color:var(--primary);box-shadow:var(--shadow-glow);transform:translateY(-3px)}
+
+/* === KEY: EXPANDS BOTH DIRECTIONS === */
+.project-card.expanded{
+    grid-column:1 / -1 !important;   /* FULL WIDTH horizontally */
+    transform:none;
+    border-color:var(--primary);
+    box-shadow:0 0 50px rgba(108,92,231,.35);
+    cursor:default;
+}
+
+.project-preview{position:relative}
+.project-thumb{height:200px;background:linear-gradient(135deg,#1a1a3e,#2d2d5e);display:flex;align-items:center;justify-content:center;position:relative;transition:height .4s ease}
+.project-card.expanded .project-thumb{height:300px}
+.project-thumb i.project-main-icon{font-size:50px;opacity:.4;transition:var(--transition)}
+.project-card.expanded .project-thumb i.project-main-icon{font-size:80px}
+.github-overlay{position:absolute;inset:0;background:rgba(108,92,231,.85);display:flex;align-items:center;justify-content:center;opacity:0;transition:var(--transition)}
+.project-card:hover .github-overlay{opacity:1}
+.project-card.expanded .github-overlay{opacity:0!important}
+.github-overlay a{width:50px;height:50px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;color:var(--primary-dark);font-size:22px;transition:var(--transition)}
+.github-overlay a:hover{transform:scale(1.15)}
+
+.project-summary{padding:20px;transition:var(--transition)}
+.project-card.expanded .project-summary{padding:28px 32px 0}
+.project-summary h3{font-size:17px;font-weight:700;margin-bottom:6px;transition:var(--transition)}
+.project-card.expanded .project-summary h3{font-size:26px;margin-bottom:10px}
+.project-summary p{font-size:13px;color:var(--text-muted);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:12px}
+.project-card.expanded .project-summary p{display:none}
+.tech-pills{display:flex;flex-wrap:wrap;gap:5px}
+.tech-pills span{padding:3px 10px;background:rgba(108,92,231,.08);border:1px solid rgba(108,92,231,.15);border-radius:20px;font-size:11px;color:var(--primary-light)}
+.project-card.expanded .project-summary .tech-pills{display:none}
+
+.expand-hint{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;font-size:12px;color:var(--text-muted);border-top:1px solid var(--border);transition:var(--transition)}
+.project-card:hover .expand-hint{color:var(--primary-light)}
+.expand-hint i{transition:transform .3s}
+.project-card.expanded .expand-hint{border-top:none;border-bottom:1px solid var(--border);color:var(--accent);font-weight:600}
+.project-card.expanded .expand-hint i{transform:rotate(180deg)}
+
+/* Expanded content — 2 column horizontal layout */
+.project-expanded{display:none;padding:28px 32px 32px;animation:fadeIn .5s ease}
+.project-card.expanded .project-expanded{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+
+.expanded-columns{
+    display:grid;
+    grid-template-columns:1fr 1fr;   /* HORIZONTAL 2-column layout */
+    gap:40px;
+    margin-bottom:32px;
+}
+.expanded-section{margin-bottom:24px}
+.expanded-section h4{font-size:15px;font-weight:700;color:var(--primary-light);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.expanded-section p,.expanded-section li{font-size:14px;color:var(--text-secondary);line-height:1.8}
+.expanded-section ul{padding-left:4px}
+.expanded-section ul li{position:relative;padding:5px 0 5px 18px}
+.expanded-section ul li::before{content:'▸';position:absolute;left:0;color:var(--primary)}
+.expanded-links{display:flex;gap:12px;flex-wrap:wrap}
+.expanded-links a{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:rgba(108,92,231,.1);border:1px solid rgba(108,92,231,.25);border-radius:50px;font-size:13px;font-weight:600;color:var(--primary-light);transition:var(--transition)}
+.expanded-links a:hover{background:var(--primary);color:white;border-color:var(--primary);transform:translateY(-2px)}
+
+/* FULL-SIZE IMAGES GRID */
+.images-heading{font-size:16px;font-weight:700;color:var(--primary-light);margin-bottom:16px;display:flex;align-items:center;gap:8px;padding-top:24px;border-top:1px solid var(--border)}
+.project-images{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(380px,1fr));  /* LARGE images */
+    gap:20px;
+}
+.project-images .img-box{
+    height:300px;                /* BIG height for full view */
+    background:linear-gradient(135deg,rgba(108,92,231,.12),rgba(0,206,201,.12));
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+    font-size:14px;color:var(--text-muted);
+    transition:var(--transition);
+    cursor:pointer;
+    overflow:hidden;
+    position:relative;
+}
+.project-images .img-box i{font-size:48px;color:var(--primary);opacity:.5}
+.project-images .img-box:hover{border-color:var(--primary);box-shadow:var(--shadow-glow);transform:scale(1.02)}
+.project-images .img-box img{width:100%;height:100%;object-fit:cover}
+.img-zoom-tag{position:absolute;bottom:12px;right:12px;padding:4px 12px;background:rgba(10,10,26,.8);border-radius:20px;font-size:11px;color:var(--primary-light)}
+
+.close-project{display:flex;justify-content:center;margin-top:24px}
+.close-project button{padding:12px 32px;background:rgba(253,121,168,.1);border:1px solid var(--accent);border-radius:50px;color:var(--accent);font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:8px;transition:var(--transition);font-family:'Inter',sans-serif}
+.close-project button:hover{background:var(--accent);color:white}
+
+.projects-cta{text-align:center;margin-top:48px}
+
+/* LIGHTBOX */
+#lightbox{position:fixed;inset:0;background:rgba(5,5,15,.95);z-index:99998;display:none;align-items:center;justify-content:center;padding:40px}
+#lightbox.active{display:flex;animation:fadeIn .3s}
+#lightbox .lb-content{max-width:90vw;max-height:85vh;background:var(--bg-card);border:1px solid var(--primary);border-radius:var(--radius);padding:40px 60px;text-align:center}
+#lightbox .lb-content i{font-size:100px;color:var(--primary);margin-bottom:20px}
+#lightbox .lb-content h3{font-size:22px;margin-bottom:8px}
+#lightbox .lb-content p{color:var(--text-muted);font-size:14px}
+#lightbox .lb-close{position:absolute;top:30px;right:40px;width:50px;height:50px;border-radius:50%;background:var(--bg-card);border:1px solid var(--border);color:white;font-size:20px;display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+#lightbox .lb-close:hover{background:var(--accent);border-color:var(--accent)}
+
+/* CERTIFICATIONS */
+.certifications{padding:100px 0;background:var(--bg-section);position:relative;z-index:1}
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+.cert-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:32px;text-align:center;transition:var(--transition);position:relative;overflow:hidden}
+.cert-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gradient-1)}
+.cert-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-glow);border-color:var(--primary)}
+.cert-badge{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:32px}
+.cert-badge.aws-badge{background:rgba(255,153,0,.15);color:#ff9900}
+.cert-badge.saa{background:rgba(255,153,0,.2)}
+.cert-badge.azure-badge{background:rgba(0,120,212,.15);color:#0078d4}
+.cert-badge.terraform-badge{background:rgba(98,60,234,.15);color:#623ce4}
+.cert-content h4{font-size:16px;font-weight:700;margin-bottom:8px}
+.cert-issuer{color:var(--text-muted);font-size:13px;margin-bottom:8px}
+.cert-date{font-size:13px;color:var(--text-secondary);margin-bottom:16px}
+.cert-date i{margin-right:4px;color:var(--primary)}
+.cert-link{display:inline-flex;align-items:center;gap:6px;color:var(--primary-light);font-size:13px;font-weight:500;transition:var(--transition)}
+.cert-link:hover{color:var(--secondary)}
+
+/* EXPERIENCE */
+.experience{padding:100px 0;background:var(--bg-section);position:relative;z-index:1}
+.timeline{position:relative;max-width:900px;margin:0 auto}
+.timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:var(--border);transform:translateX(-50%)}
+.timeline-item{width:50%;padding:20px 40px;position:relative}
+.timeline-item.left{left:0;text-align:right}
+.timeline-item.right{left:50%;text-align:left}
+.timeline-item::before{content:'';position:absolute;top:30px;width:16px;height:16px;border-radius:50%;background:var(--gradient-1);border:3px solid var(--bg-dark);z-index:2}
+.timeline-item.left::before{right:-8px}
+.timeline-item.right::before{left:-8px}
+.timeline-content{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;transition:var(--transition)}
+.timeline-content:hover{border-color:var(--primary);box-shadow:var(--shadow-glow)}
+.timeline-tag{display:inline-block;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.timeline-tag.internship{background:rgba(0,206,201,.15);color:var(--secondary)}
+.timeline-tag.education{background:rgba(108,92,231,.15);color:var(--primary-light)}
+.timeline-tag.project-tag{background:rgba(253,121,168,.15);color:var(--accent)}
+.timeline-content h3{font-size:18px;font-weight:700;margin-bottom:8px}
+.timeline-content h4{font-size:14px;color:var(--text-secondary);font-weight:500;margin-bottom:8px}
+.timeline-content h4 i{color:var(--primary);margin-right:6px}
+.timeline-date{font-size:13px;color:var(--text-muted);margin-bottom:16px}
+.timeline-content ul{text-align:left}
+.timeline-content ul li{font-size:14px;color:var(--text-secondary);padding:4px 0 4px 16px;position:relative}
+.timeline-content ul li::before{content:'▸';position:absolute;left:0;color:var(--primary)}
+
+/* CONTACT */
+.contact{padding:100px 0;position:relative;z-index:1}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.contact-card{display:flex;align-items:center;gap:16px;padding:20px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:16px;transition:var(--transition)}
+.contact-card:hover{border-color:var(--primary);transform:translateX(5px)}
+.contact-icon{width:50px;height:50px;border-radius:12px;background:rgba(108,92,231,.1);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--primary);flex-shrink:0}
+.contact-card h4{font-size:14px;font-weight:600;margin-bottom:4px}
+.contact-card p,.contact-detail-link{font-size:14px;color:var(--text-secondary)}
+.contact-detail-link{transition:var(--transition);cursor:pointer}
+.contact-detail-link:hover{color:var(--primary-light)}
+.contact-availability{display:flex;align-items:center;gap:10px;padding:16px 20px;background:rgba(0,206,201,.05);border:1px solid rgba(0,206,201,.2);border-radius:var(--radius-sm);margin-top:24px}
+.availability-dot{width:10px;height:10px;border-radius:50%;background:#00cec9;animation:pulse-dot 2s infinite;flex-shrink:0}
+@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(0,206,201,.4)}50%{box-shadow:0 0 0 8px rgba(0,206,201,0)}}
+.contact-availability span{font-size:14px;color:var(--secondary);font-weight:500}
+.contact-form{display:flex;flex-direction:column;gap:16px}
+.input-wrapper{position:relative;display:flex;align-items:center}
+.input-wrapper i{position:absolute;left:16px;color:var(--text-muted);font-size:14px;z-index:2}
+.input-wrapper input,.input-wrapper textarea{width:100%;padding:14px 16px 14px 44px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);font-size:14px;font-family:'Inter',sans-serif;transition:var(--transition)}
+.input-wrapper input:focus,.input-wrapper textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(108,92,231,.1)}
+.input-wrapper input::placeholder,.input-wrapper textarea::placeholder{color:var(--text-muted)}
+.textarea-wrapper{align-items:flex-start}
+.textarea-wrapper i{top:16px}
+.textarea-wrapper textarea{resize:vertical;min-height:120px}
+.form-actions{display:grid;grid-template-columns:1fr auto;gap:12px}
+.btn-submit{justify-content:center;padding:16px;font-size:15px;width:100%}
+.btn-copy{background:var(--bg-card);border:1px solid var(--border);color:var(--text-secondary);padding:0 20px;font-size:14px;border-radius:50px;display:inline-flex;align-items:center;gap:8px;transition:var(--transition)}
+.btn-copy:hover{border-color:var(--primary);color:var(--primary-light)}
+
+/* FOOTER */
+.footer{background:var(--bg-section);border-top:1px solid var(--border);padding:60px 0 30px;position:relative;z-index:1}
+.footer-content{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-logo{font-size:28px;font-weight:800;font-family:'JetBrains Mono',monospace;display:block;margin-bottom:12px}
+.footer-brand p{color:var(--text-secondary);font-size:14px}
+.footer-social h4,.footer-quick-links h4{font-size:16px;font-weight:600;margin-bottom:20px}
+.social-links{display:flex;gap:12px}
+.social-link{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;transition:var(--transition);background:var(--bg-card);border:1px solid var(--border);color:var(--text-secondary)}
+.social-link:hover{transform:translateY(-4px)}
+.social-link.linkedin:hover{background:#0077b5;border-color:#0077b5;color:white;box-shadow:0 8px 25px rgba(0,119,181,.4)}
+.social-link.github:hover{background:#333;border-color:#333;color:white;box-shadow:0 8px 25px rgba(51,51,51,.4)}
+.social-link.email:hover{background:#ea4335;border-color:#ea4335;color:white;box-shadow:0 8px 25px rgba(234,67,53,.4)}
+.footer-quick-links ul{display:flex;flex-direction:column;gap:10px}
+.footer-quick-links a{color:var(--text-secondary);font-size:14px;transition:var(--transition)}
+.footer-quick-links a:hover{color:var(--primary-light);padding-left:8px}
+.footer-bottom{text-align:center;padding-top:30px;border-top:1px solid var(--border)}
+.footer-bottom p{font-size:14px;color:var(--text-muted)}
+.footer-tech{font-size:12px!important;margin-top:8px}
+
+.back-to-top{position:fixed;bottom:30px;right:30px;width:48px;height:48px;border-radius:50%;background:var(--gradient-1);color:white;font-size:18px;display:flex;align-items:center;justify-content:center;z-index:100;opacity:0;visibility:hidden;transition:var(--transition);box-shadow:var(--shadow-glow)}
+.back-to-top.visible{opacity:1;visibility:visible}
+.back-to-top:hover{transform:translateY(-4px)}
+
+[data-aos]{opacity:0;transition:all .6s ease}
+[data-aos="fade-up"]{transform:translateY(40px)}
+[data-aos="fade-down"]{transform:translateY(-40px)}
+[data-aos="fade-right"]{transform:translateX(-40px)}
+[data-aos="fade-left"]{transform:translateX(40px)}
+[data-aos="flip-left"]{transform:rotateY(30deg)}
+[data-aos].aos-animate{opacity:1;transform:translate(0) scale(1) rotateY(0)}
+
+@media(max-width:1200px){
+    .projects-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:1024px){
+    .hero-container{grid-template-columns:1fr;text-align:center}
+    .hero-description{margin:24px auto 32px}
+    .hero-buttons,.hero-stats{justify-content:center}
+    .hero-visual{margin-top:40px}
+    .cloud-architecture{width:320px;height:320px}
+    .about-grid{grid-template-columns:1fr}
+    .skill-category{grid-template-columns:1fr}
+    .category-heading{position:static;text-align:center}
+    .category-heading-row{justify-content:center}
+    .category-line{margin:10px auto 0}
+    .expanded-columns{grid-template-columns:1fr;gap:0}
+    .contact-grid{grid-template-columns:1fr}
+    .footer-content{grid-template-columns:1fr;text-align:center}
+    .social-links{justify-content:center}
+    .footer-quick-links ul{align-items:center}
+}
+@media(max-width:768px){
+    .nav-links,.nav-cta{display:none}
+    .hamburger{display:flex}
+    .hero{padding-top:100px}
+    .name{font-size:36px}
+    .hero-buttons{flex-direction:column;align-items:center}
+    .hero-stats{flex-direction:column;gap:16px}
+    .stat-divider{width:40px;height:1px}
+    .cloud-architecture{width:260px;height:260px}
+    .arch-node{width:54px;height:54px}.arch-node i{font-size:18px}.arch-node span{font-size:7px}
+    .node-center{width:70px;height:70px}.node-center i{font-size:22px}
+    .category-cards{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+    .about-highlights{grid-template-columns:1fr}
+    .cert-grid{grid-template-columns:1fr}
+    .projects-grid{grid-template-columns:1fr}
+    .project-images{grid-template-columns:1fr}
+    .project-images .img-box{height:220px}
+    .project-card.expanded .project-summary{padding:20px 20px 0}
+    .project-card.expanded .project-summary h3{font-size:20px}
+    .project-expanded{padding:20px}
+    .form-actions{grid-template-columns:1fr}
+    .timeline::before{left:20px}
+    .timeline-item{width:100%;left:0!important;text-align:left!important;padding-left:50px;padding-right:16px}
+    .timeline-item::before{left:12px!important;right:auto!important}
+    .cursor-dot,.cursor-outline{display:none}
+    body{cursor:auto}
+}
+@media(max-width:480px){
+    .container{padding:0 16px}
+    .section-title{font-size:28px}
+    .about-info-cards{flex-direction:column;align-items:center}
+}
+</style>
+</head>
+<body>
+
+<canvas id="particleCanvas"></canvas>
+<div class="cursor-dot"></div>
+<div class="cursor-outline"></div>
+
+<!--<div id="loader">
+    <div class="loader-content">
+        <div class="cloud-loader"><i class="fas fa-cloud"></i></div>
+        <div class="loader-text">Deploying Portfolio...</div>
+        <div class="loader-bar"><div class="loader-progress"></div></div>
+    </div>
+</div> -->
+
+<!-- LIGHTBOX for full-size image viewing -->
+<div id="lightbox" onclick="closeLightbox()">
+    <button class="lb-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
+    <div class="lb-content" id="lbContent"></div>
+</div>
+
+<nav id="navbar">
+    <div class="nav-container">
+        <a href="#" class="nav-logo"><span class="logo-bracket">&lt;</span>SB<span class="logo-slash">/</span><span class="logo-bracket">&gt;</span></a>
+        <ul class="nav-links">
+            <li><a href="#home" class="nav-link active">Home</a></li>
+            <li><a href="#about" class="nav-link">About</a></li>
+            <li><a href="#skills" class="nav-link">Skills</a></li>
+            <li><a href="#projects" class="nav-link">Projects</a></li>
+            <li><a href="#certifications" class="nav-link">Certifications</a></li>
+            <li><a href="#experience" class="nav-link">Experience</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+        <a href="#contact" class="nav-cta">Hire Me</a>
+        <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+    <ul class="mobile-nav-links">
+        <li><a href="#home" class="mobile-nav-link">Home</a></li>
+        <li><a href="#about" class="mobile-nav-link">About</a></li>
+        <li><a href="#skills" class="mobile-nav-link">Skills</a></li>
+        <li><a href="#projects" class="mobile-nav-link">Projects</a></li>
+        <li><a href="#certifications" class="mobile-nav-link">Certifications</a></li>
+        <li><a href="#experience" class="mobile-nav-link">Experience</a></li>
+        <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+    </ul>
+</div>
+
+<!-- HERO -->
+<section id="home" class="hero">
+    <div class="hero-container">
+        <div class="hero-content">
+            <div class="hero-badge" data-aos="fade-down"><i class="fas fa-cloud"></i><span>Available for Opportunities</span></div>
+            <h1 data-aos="fade-up">
+                <span class="greeting">Hello, I'm</span>
+                <span class="name">Saibaba Kola</span>
+                <span class="role-wrapper">A <span class="typed-text" id="typedText"></span><span class="cursor-blink">|</span></span>
+            </h1>
+            <p class="hero-description" data-aos="fade-up" data-aos-delay="200"> “The cloud is my playground, automation is my weapon, and scalability is my mindset.”  </p>
+            <p class="hero-description" data-aos="fade-up" data-aos-delay="200"> “Building secure, resilient, and highly available cloud environments with a strong focus on automation, performance, and reliability.” </p>
+            <p class="hero-description" data-aos="fade-up" data-aos-delay="200"> Specializing in <strong>AWS</strong>, <strong>Azure</strong>, <strong>Terraform</strong>, and <strong>CI/CD pipelines</strong>.</p>
+            <div class="hero-buttons" data-aos="fade-up" data-aos-delay="400">
+                <a href="#projects" class="btn btn-primary"><i class="fas fa-rocket"></i> View Projects</a>
+                <a href="#contact" class="btn btn-secondary"><i class="fas fa-paper-plane"></i> Get in Touch</a>
+                <a href="Saibaba-Multi-Cloud-Resume.pdf" class="btn btn-outline" download><i class="fas fa-download"></i> Resume </a>
+            </div>
+            <div class="hero-stats" data-aos="fade-up" data-aos-delay="600">
+                <div class="stat-item"><span class="stat-number" data-count="5">0</span><span class="stat-plus">+</span><span class="stat-label">Cloud Projects</span></div>
+                <div class="stat-divider"></div>
+                <div class="stat-item"><span class="stat-number" data-count="4">0</span><span class="stat-plus">+</span><span class="stat-label">Certifications</span></div>
+                <div class="stat-divider"></div>
+                <div class="stat-item"><span class="stat-number" data-count="15">0</span><span class="stat-plus">+</span><span class="stat-label">Tools Mastered</span></div>
+            </div>
+        </div>
+        <div class="hero-visual" data-aos="fade-left" data-aos-delay="300">
+            <div class="cloud-architecture">
+                <div class="arch-node node-center"><i class="fas fa-cloud"></i><span>Cloud</span></div>
+                <div class="arch-node node-1"><i class="fab fa-aws"></i><span>AWS</span></div>
+                <div class="arch-node node-2"><i class="fab fa-microsoft"></i><span>Azure</span></div>
+                <div class="arch-node node-3"><i class="fab fa-docker"></i><span>Docker</span></div>
+                <div class="arch-node node-4"><i class="fas fa-dharmachakra"></i><span>K8s</span></div>
+                <div class="arch-node node-5"><i class="fas fa-code-branch"></i><span>CI/CD</span></div>
+                <div class="arch-node node-6"><i class="fas fa-shield-halved"></i><span>Security</span></div>
+                <svg class="connection-lines" viewBox="0 0 400 400">
+                    <line x1="200" y1="200" x2="200" y2="50" class="conn-line"/><line x1="200" y1="200" x2="340" y2="110" class="conn-line"/>
+                    <line x1="200" y1="200" x2="340" y2="290" class="conn-line"/><line x1="200" y1="200" x2="200" y2="350" class="conn-line"/>
+                    <line x1="200" y1="200" x2="60" y2="290" class="conn-line"/><line x1="200" y1="200" x2="60" y2="110" class="conn-line"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-indicator"><div class="mouse"><div class="wheel"></div></div><span>Scroll Down</span></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="about">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up"><span class="section-tag"><i class="fas fa-user"></i> Get to Know Me</span><h2 class="section-title">About Me</h2><div class="section-line"></div></div>
+        <div class="about-grid">
+            <div class="about-image" data-aos="fade-right">
+                <div class="image-wrapper"><img src="proimage.png" alt="Alex Johnson" class="my-profile-pic"><div class="image-decoration"></div><div class="image-dots"></div></div>
+                <div class="about-info-cards">
+                    <div class="info-card"><i class="fas fa-graduation-cap"></i><div><strong>B.Tech CSE</strong><span>2020 - 2024</span></div></div>
+                    <div class="info-card"><i class="fas fa-map-marker-alt"></i><div><strong>Hyderabad</strong><span>India</span></div></div>
+                </div>
+            </div>
+            <div class="about-content" data-aos="fade-left">
+                <h3 class="about-subtitle">Cloud Enthusiast </h3>
+                <p class="about-text">I'm a Electronics and Communication graduate passionate about cloud computing and DevOps. I specialize in <strong>Infrastructure as Code</strong>, containerization, and automated CI/CD pipelines.</p>
+                <p class="about-text">When I'm not working with cloud services, you'll find me contributing to open-source projects, writing technical blogs, or exploring new architectural patterns.</p>
+                <div class="about-highlights">
+                    <div class="highlight-item"><i class="fas fa-check-circle"></i><span>AWS & Azure Infrastructure</span></div>
+                    <div class="highlight-item"><i class="fas fa-check-circle"></i><span>Terraform IaC</span></div>
+                    <div class="highlight-item"><i class="fas fa-check-circle"></i><span>Docker & Kubernetes</span></div>
+                    <div class="highlight-item"><i class="fas fa-check-circle"></i><span>CI/CD Automation</span></div>
+                    <div class="highlight-item"><i class="fas fa-check-circle"></i><span>Cloud Security</span></div>
+                    <div class="highlight-item"><i class="fas fa-check-circle"></i><span>Monitoring & Observability</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="skills">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up"><span class="section-tag"><i class="fas fa-cogs"></i> What I Know</span><h2 class="section-title">Technical Skills</h2><div class="section-line"></div></div>
+        <div class="skills-categories">
+            <div class="skill-category" data-aos="fade-up">
+                <div class="category-heading">
+                    <div class="category-heading-row cloud-row"><i class="fas fa-cloud"></i><h3>Cloud Platforms</h3></div>
+                    <p>Building & managing infrastructure on leading providers</p><div class="category-line"></div>
+                </div>
+                <div class="category-cards">
+                    <div class="skill-box"><div class="skill-box-icon icon-aws"><i class="fab fa-aws"></i></div><h4>AWS</h4></div>
+                    <div class="skill-box"><div class="skill-box-icon icon-azure"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azure/azure-original.svg" /></div><h4>Azure</h4></div>
+                </div>
+            </div>
+            <div class="skill-category" data-aos="fade-up">
+                <div class="category-heading">
+                    <div class="category-heading-row devops-row"><i class="fas fa-infinity"></i><h3>DevOps Tools</h3></div>
+                    <p>Automating builds, deployments & infrastructure</p><div class="category-line"></div>
+                </div>
+                <div class="category-cards">
+                    <div class="skill-box"><div class="skill-box-icon icon-terraform"><i class="devicon-terraform-plain colored"></i></div><h4>Terraform</h4></div>
+                    <div class="skill-box"><div class="skill-box-icon icon-docker"><i class="fab fa-docker"></i></div><h4>Docker</h4></div>
+                    <div class="skill-box"><div class="skill-box-icon icon-k8s"><i class="fas fa-dharmachakra"></i></div><h4>Kubernetes</h4></div>
+                    <div class="skill-box"><div class="skill-box-icon icon-ansible"><i class="devicon-ansible-plain-wordmark"></i></div><h4>Ansible</h4></div>
+                    <div class="skill-box"><div class="skill-box-icon icon-github-actions"><i class="fab fa-github"></i></div><h4>GitHub Actions</h4></div>
+                    <div class="skill-box"><div class="skill-box-icon icon-jenkins"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jenkins/jenkins-original.svg" /></div><h4>Jenkins</h4></div>
+                </div>
+            </div>
+            <div class="skill-category" data-aos="fade-up">
+                <div class="category-heading">
+                    <div class="category-heading-row prog-row"><i class="fas fa-code"></i><h3>Programming</h3></div>
+                    <p>Scripting & automation languages</p><div class="category-line"></div>
+                </div>
+                <div class="category-cards">
+                    <div class="skill-box"><div class="skill-box-icon icon-python"><i class="fab fa-python"></i></div><h4>Python</h4></div>
+                    <div class="skill-box"><div class="skill-box-icon icon-bash"><i class="fas fa-terminal"></i></div><h4>Bash</h4></div>
+                </div>
+            </div>
+            <div class="skill-category" data-aos="fade-up">
+                <div class="category-heading">
+                    <div class="category-heading-row db-row"><i class="fas fa-database"></i><h3>Databases</h3></div>
+                    <p>Relational & NoSQL data stores</p><div class="category-line"></div>
+                </div>
+                <div class="category-cards">
+                    <div class="skill-box"><div class="skill-box-icon icon-mysql"><i class="fas fa-database"></i></div><h4>MySQL</h4></div>
+                    <div class="skill-box"><div class="skill-box-icon icon-postgresql"><i class="fas fa-database"></i></div><h4>PostgreSQL</h4></div>
+                    <div class="skill-box"><div class="skill-box-icon icon-dynamodb"><i class="fas fa-database"></i></div><h4>DynamoDB</h4></div>
+                </div>
+            </div>
+            <div class="skill-category" data-aos="fade-up">
+                <div class="category-heading">
+                    <div class="category-heading-row os-row"><i class="fas fa-desktop"></i><h3>Operating Systems</h3></div>
+                    <p>System administration & management</p><div class="category-line"></div>
+                </div>
+                <div class="category-cards">
+                    <div class="skill-box"><div class="skill-box-icon icon-windows"><i class="fab fa-windows"></i></div><h4>Windows</h4></div>
+                    <div class="skill-box"><div class="skill-box-icon icon-linux"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" /></div><h4>Linux</h4></div>
+                </div>
+            </div>
+            <div class="skill-category" data-aos="fade-up">
+                <div class="category-heading">
+                    <div class="category-heading-row monitor-row"><i class="fas fa-chart-line"></i><h3>Monitoring</h3></div>
+                    <p>Observability, alerting & dashboards</p><div class="category-line"></div>
+                </div>
+                <div class="category-cards">
+                    <div class="skill-box"><div class="skill-box-icon icon-prometheus"><i class="devicon-prometheus-plain-wordmark colored"></i></div><h4>Prometheus</h4></div>
+                    <div class="skill-box"><div class="skill-box-icon icon-grafana"><i class="devicon-grafana-plain-wordmark colored"></i></div><h4>Grafana</h4></div>
+                    <div class="skill-box"><div class="skill-box-icon icon-cloudwatch"><i class="fas fa-eye"></i></div><h4>CloudWatch</h4></div>
+                    <div class="skill-box"><div class="skill-box-icon icon-azuremonitor"><i class="fab fa-microsoft"></i></div><h4>Azure Monitor</h4></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PROJECTS — FULL WIDTH EXPAND ==================== -->
+<section id="projects" class="projects">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up"><span class="section-tag"><i class="fas fa-project-diagram"></i> My Work</span><h2 class="section-title">Featured Projects</h2><div class="section-line"></div><p class="section-subtitle">Click any project to expand full details, screenshots & responsibilities</p></div>
+
+        <div class="projects-grid" id="projectsGrid">
+
+            <!-- PROJECT 1 -->
+            <div class="project-card" data-aos="fade-up" onclick="toggleProject(this,event)">
+                <div class="project-preview">
+                    <div class="project-thumb" style="background:linear-gradient(135deg,#1a1a3e,#3a2a1e)">
+                        <i class="fas fa-network-wired project-main-icon" style="color:#ff9900"></i>
+                        <div class="github-overlay"><a href="https://github.com/alexjohnson-cloud/3tier-aws" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-github"></i></a></div>
+                    </div>
+                    <div class="project-summary">
+                        <h3>AI-Powered Multi-Cloud Application Deployment & Monitoring  </h3>
+                        <p>Developed and deployed a Python Flask application across AWS and Azure using CI/CD pipelines, integrating AI-powered monitoring, Prometheus, and Grafana for automated health checks and real-time performance monitoring. </p>
+                        <div class="tech-pills"><span>Azure</span> <span>AWS </span><span>Terraform</span><span>Docker</span><span>Git</span><span>GitHub Actions</span> <span>Prometheus </span> <span>Grafana</span><span>Python</span></div>
+                    </div>
+                    <div class="expand-hint"><i class="fas fa-chevron-down"></i> <span class="hint-text">Click to expand</span></div>
+                </div>
+                <div class="project-expanded">
+                    <div class="expanded-columns">
+                        <div>
+                            <div class="expanded-section"><h4><i class="fas fa-bullseye"></i> Objective</h4><p>Developed and deployed a Python Flask application on AWS Elastic Beanstalk and Azure App Service using CI/CD pipelines. an AI monitoring agent with Prometheus and Grafana to automate health checks, monitor performance, and provide real-time application insights across both cloud platforms.</p></div>
+                            <div class="expanded-section"><h4><i class="fas fa-layer-group"></i> Tech Stack</h4><div class="tech-pills"><span>Azure</span> <span>AWS </span><span>Terraform</span><span>Docker</span><span>Git</span><span>GitHub Actions</span> <span>Prometheus </span> <span>Grafana</span><span>Python</span></div></div>
+                            <div class="expanded-section"><h4><i class="fas fa-link"></i> Links</h4><div class="expanded-links"><a href="https://github.com/Saibaba-22/Sentinelops-lite-monitoring-progra-awsbs-git.git" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-github"></i> GitHub Repository</a><a href="#" onclick="event.stopPropagation()"><i class="fas fa-external-link-alt"></i> Live Demo</a></div></div>
+                        </div>
+                        <div>
+                            <div class="expanded-section"><h4><i class="fas fa-user-gear"></i> Role & Responsibilities</h4><ul>
+                                <li>Developed and deployed a Python Flask application on AWS Elastic Beanstalk and Azure App Service using Docker and automated GitHub Actions CI/CD pipelines. </li>
+                                <li>Integrated an AI-based monitoring agent to automate application health checks, deployment validation, and issue detection.</li>
+                                <li>Implemented Prometheus for metrics collection and built Grafana dashboards for real-time monitoring, visualization, and performance analysis.</li>
+                                <li>Monitored application availability, resource utilization, and system health while troubleshooting deployment, infrastructure, and application-related issues.</li>
+                                <li>Managed source code using Git/GitHub and ensured reliable, highly available deployments with continuous monitoring across multi-cloud environments</li>
+                            </ul></div>
+                        </div>
+                    </div>
+                    <h4 class="images-heading"><i class="fas fa-images"></i> Project Screenshots</h4>
+                    <div class="project-images">
+                        <div class="img-box" onclick="openLightbox(event, 'project/Project11.png', 'AI Integrated Architecture Diagram', 'Complete Architecture Image')"><img src="project/Project11.png" alt="VPC Architecture Diagram"><span>AI Integrated Architecture Diagram</span><span class="img-zoom-tag"><i class="fas fa-expand"></i> Full Size </span></div>
+                        <div class="img-box" onclick="openLightbox(event,'fa-chart-bar','CloudWatch Dashboard','Real-time metrics & auto-scaling triggers')"><i class="fas fa-chart-bar"></i><span>CloudWatch Dashboard</span><span class="img-zoom-tag"><i class="fas fa-expand"></i> Full Size</span></div>
+                    </div>
+                    <div class="close-project"><button onclick="closeProject(event)"><i class="fas fa-times"></i> Close Project</button></div>
+                </div>
+            </div>
+
+            <!-- PROJECT 2 -->
+            <div class="project-card" data-aos="fade-up" data-aos-delay="100" onclick="toggleProject(this,event)">
+                <div class="project-preview">
+                    <div class="project-thumb" style="background:linear-gradient(135deg,#1a2a3e,#1a3a5e)">
+                        <i class="fas fa-infinity project-main-icon" style="color:#f39c12"></i>
+                        <div class="github-overlay"><a href="https://github.com/alexjohnson-cloud/cicd-pipeline" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-github"></i></a></div>
+                    </div>
+                    <div class="project-summary">
+                        <h3>CI/CD Pipeline with Jenkins & Docker</h3>
+                        <p>Built end-to-end CI/CD pipeline for Node.js microservice with automated testing, Docker builds, ECR push and ECS deployment.</p>
+                        <div class="tech-pills"><span>Jenkins</span><span>Docker</span><span>ECR</span><span>ECS</span><span>SonarQube</span></div>
+                    </div>
+                    <div class="expand-hint"><i class="fas fa-chevron-down"></i> <span class="hint-text">Click to expand</span></div>
+                </div>
+                <div class="project-expanded">
+                    <div class="expanded-columns">
+                        <div>
+                            <div class="expanded-section"><h4><i class="fas fa-bullseye"></i> Objective</h4><p>Automate the complete software delivery lifecycle from code commit to production deployment, ensuring code quality through automated unit testing, static analysis, container vulnerability scanning, and zero-downtime blue-green deployments.</p></div>
+                            <div class="expanded-section"><h4><i class="fas fa-layer-group"></i> Tech Stack</h4><div class="tech-pills"><span>Jenkins</span><span>Docker</span><span>ECR</span><span>ECS Fargate</span><span>SonarQube</span><span>GitHub Webhooks</span><span>Trivy</span><span>Slack API</span><span>Groovy</span><span>Nexus</span></div></div>
+                            <div class="expanded-section"><h4><i class="fas fa-link"></i> Links</h4><div class="expanded-links"><a href="https://github.com/alexjohnson-cloud/cicd-pipeline" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-github"></i> GitHub Repository</a></div></div>
+                        </div>
+                        <div>
+                            <div class="expanded-section"><h4><i class="fas fa-user-gear"></i> Role & Responsibilities</h4><ul>
+                                <li>Configured declarative Jenkins pipeline using Groovy shared libraries</li>
+                                <li>Implemented multi-stage Docker builds reducing final image size by 60%</li>
+                                <li>Integrated SonarQube quality gates blocking merges on code smells</li>
+                                <li>Set up Trivy scanning for container CVE vulnerability detection</li>
+                                <li>Configured blue-green deployment strategy on ECS Fargate with rollback</li>
+                                <li>Built Slack notification system reporting build status in real-time</li>
+                                <li>Reduced average deployment time from 45 minutes to 8 minutes</li>
+                            </ul></div>
+                        </div>
+                    </div>
+                    <h4 class="images-heading"><i class="fas fa-images"></i> Project Screenshots</h4>
+                    <div class="project-images">
+                        <div class="img-box" onclick="openLightbox(event,'fa-code-branch','Jenkins Pipeline View','Complete stage view with build timings')"><i class="fas fa-code-branch"></i><span>Jenkins Pipeline Stages</span><span class="img-zoom-tag"><i class="fas fa-expand"></i> Full Size</span></div>
+                        <div class="img-box" onclick="openLightbox(event,'fa-check-circle','SonarQube Quality Gate','Code coverage & quality metrics')"><i class="fas fa-check-circle"></i><span>SonarQube Quality Gate</span><span class="img-zoom-tag"><i class="fas fa-expand"></i> Full Size</span></div>
+                        <div class="img-box" onclick="openLightbox(event,'fa-docker','Docker Build Output','Multi-stage build optimization')"><i class="fab fa-docker"></i><span>Docker Build Logs</span><span class="img-zoom-tag"><i class="fas fa-expand"></i> Full Size</span></div>
+                        <div class="img-box" onclick="openLightbox(event,'fa-slack','Slack Notifications','Automated build status alerts')"><i class="fab fa-slack"></i><span>Slack Integration</span><span class="img-zoom-tag"><i class="fas fa-expand"></i> Full Size</span></div>
+                    </div>
+                    <div class="close-project"><button onclick="closeProject(event)"><i class="fas fa-times"></i> Close Project</button></div>
+                </div>
+            </div>
+
+            <!-- PROJECT 3 -->
+            <div class="project-card" data-aos="fade-up" data-aos-delay="200" onclick="toggleProject(this,event)">
+                <div class="project-preview">
+                    <div class="project-thumb" style="background:linear-gradient(135deg,#1a1a4e,#2a2a6e)">
+                        <i class="fas fa-dharmachakra project-main-icon" style="color:#326ce5"></i>
+                        <div class="github-overlay"><a href="https://github.com/alexjohnson-cloud/k8s-microservices" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-github"></i></a></div>
+                    </div>
+                    <div class="project-summary">
+                        <h3>Kubernetes Microservices on EKS</h3>
+                        <p>Deployed e-commerce microservices on EKS with Helm charts, HPA, Istio service mesh and Prometheus/Grafana monitoring.</p>
+                        <div class="tech-pills"><span>EKS</span><span>Helm</span><span>Istio</span><span>Prometheus</span><span>Grafana</span></div>
+                    </div>
+                    <div class="expand-hint"><i class="fas fa-chevron-down"></i> <span class="hint-text">Click to expand</span></div>
+                </div>
+                <div class="project-expanded">
+                    <div class="expanded-columns">
+                        <div>
+                            <div class="expanded-section"><h4><i class="fas fa-bullseye"></i> Objective</h4><p>Deploy a cloud-native microservices e-commerce application on Kubernetes with full observability stack, intelligent traffic management via service mesh, and automatic horizontal scaling based on real-time load metrics.</p></div>
+                            <div class="expanded-section"><h4><i class="fas fa-layer-group"></i> Tech Stack</h4><div class="tech-pills"><span>AWS EKS</span><span>Helm</span><span>Istio</span><span>Prometheus</span><span>Grafana</span><span>HPA</span><span>NGINX Ingress</span><span>Kustomize</span><span>ArgoCD</span><span>eksctl</span></div></div>
+                            <div class="expanded-section"><h4><i class="fas fa-link"></i> Links</h4><div class="expanded-links"><a href="https://github.com/alexjohnson-cloud/k8s-microservices" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-github"></i> GitHub Repository</a><a href="#" onclick="event.stopPropagation()"><i class="fas fa-book"></i> Documentation</a></div></div>
+                        </div>
+                        <div>
+                            <div class="expanded-section"><h4><i class="fas fa-user-gear"></i> Role & Responsibilities</h4><ul>
+                                <li>Provisioned production EKS cluster using eksctl with managed node groups</li>
+                                <li>Authored custom Helm charts for 5 microservices with ConfigMaps & Sealed Secrets</li>
+                                <li>Implemented Istio service mesh enabling canary deployments & circuit breaking</li>
+                                <li>Configured Prometheus scrape targets with custom application metrics</li>
+                                <li>Built 6 Grafana dashboards for cluster, pod, and business-level observability</li>
+                                <li>Set up Horizontal Pod Autoscaler scaling 2→20 pods based on CPU/memory</li>
+                                <li>Implemented GitOps workflow with ArgoCD for declarative deployments</li>
+                            </ul></div>
+                        </div>
+                    </div>
+                    <h4 class="images-heading"><i class="fas fa-images"></i> Project Screenshots</h4>
+                    <div class="project-images">
+                        <div class="img-box" onclick="openLightbox(event,'fa-dharmachakra','EKS Cluster Overview','All running pods, services & deployments')"><i class="fas fa-dharmachakra"></i><span>EKS Cluster Overview</span><span class="img-zoom-tag"><i class="fas fa-expand"></i> Full Size</span></div>
+                        <div class="img-box" onclick="openLightbox(event,'fa-chart-area','Grafana Dashboard','Real-time cluster & app metrics')"><i class="fas fa-chart-area"></i><span>Grafana Monitoring Dashboard</span><span class="img-zoom-tag"><i class="fas fa-expand"></i> Full Size</span></div>
+                        <div class="img-box" onclick="openLightbox(event,'fa-diagram-project','Istio Service Mesh','Traffic flow & service topology')"><i class="fas fa-diagram-project"></i><span>Istio Service Graph</span><span class="img-zoom-tag"><i class="fas fa-expand"></i> Full Size</span></div>
+                        <div class="img-box" onclick="openLightbox(event,'fa-arrows-up-down','HPA Scaling Events','Auto-scaling in action under load')"><i class="fas fa-arrows-up-down"></i><span>HPA Scaling Events</span><span class="img-zoom-tag"><i class="fas fa-expand"></i> Full Size</span></div>
+                    </div>
+                    <div class="close-project"><button onclick="closeProject(event)"><i class="fas fa-times"></i> Close Project</button></div>
+                </div>
+            </div>
+
+            <!-- PROJECT 4 -->
+            <div class="project-card" data-aos="fade-up" onclick="toggleProject(this,event)">
+                <div class="project-preview">
+                    <div class="project-thumb" style="background:linear-gradient(135deg,#2a1a1a,#4a1a2a)">
+                        <i class="fas fa-bolt project-main-icon" style="color:#e74c3c"></i>
+                        <div class="github-overlay"><a href="https://github.com/alexjohnson-cloud/serverless-pipeline" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-github"></i></a></div>
+                    </div>
+                    <div class="project-summary">
+                        <h3>Serverless Image Processing Pipeline</h3>
+                        <p>Event-driven pipeline using Lambda, S3, SQS and DynamoDB for automated thumbnail generation and metadata extraction.</p>
+                        <div class="tech-pills"><span>Lambda</span><span>S3</span><span>SQS</span><span>DynamoDB</span><span>Python</span></div>
+                    </div>
+                    <div class="expand-hint"><i class="fas fa-chevron-down"></i> <span class="hint-text">Click to expand</span></div>
+                </div>
+                <div class="project-expanded">
+                    <div class="expanded-columns">
+                        <div>
+                            <div class="expanded-section"><h4><i class="fas fa-bullseye"></i> Objective</h4><p>Build a fully serverless, event-driven image processing system that automatically generates multiple thumbnail sizes and extracts EXIF metadata whenever images are uploaded to S3 — with zero server management and pay-per-use cost model.</p></div>
+                            <div class="expanded-section"><h4><i class="fas fa-layer-group"></i> Tech Stack</h4><div class="tech-pills"><span>AWS Lambda</span><span>S3</span><span>SQS</span><span>DynamoDB</span><span>API Gateway</span><span>Python Pillow</span><span>CloudFormation</span><span>SNS</span><span>Step Functions</span></div></div>
+                            <div class="expanded-section"><h4><i class="fas fa-link"></i> Links</h4><div class="expanded-links"><a href="https://github.com/alexjohnson-cloud/serverless-pipeline" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-github"></i> GitHub Repository</a></div></div>
+                        </div>
+                        <div>
+                            <div class="expanded-section"><h4><i class="fas fa-user-gear"></i> Role & Responsibilities</h4><ul>
+                                <li>Architected event-driven flow triggered by S3 ObjectCreated events</li>
+                                <li>Developed Python Lambda functions using Pillow for multi-size image resizing</li>
+                                <li>Configured SQS queues with dead-letter queues for resilient error handling</li>
+                                <li>Designed DynamoDB table schema with GSI for efficient metadata queries</li>
+                                <li>Built REST API via API Gateway for image retrieval and status checks</li>
+                                <li>Implemented Step Functions for orchestrating complex processing workflows</li>
+                                <li>Achieved 95% cost reduction vs. equivalent EC2-based solution</li>
+                            </ul></div>
+                        </div>
+                    </div>
+                    <h4 class="images-heading"><i class="fas fa-images"></i> Project Screenshots</h4>
+                    <div class="project-images">
+                        <div class="img-box" onclick="openLightbox(event,'fa-project-diagram','Serverless Architecture','Complete event-driven flow diagram')"><i class="fas fa-project-diagram"></i><span>Architecture Flow Diagram</span><span class="img-zoom-tag"><i class="fas fa-expand"></i> Full Size</span></div>
+                        <div class="img-box" onclick="openLightbox(event,'fa-image','Thumbnail Output','Generated multi-size thumbnails')"><i class="fas fa-image"></i><span>Thumbnail Generation Output</span><span class="img-zoom-tag"><i class="fas fa-expand"></i> Full Size</span></div>
+                        <div class="img-box" onclick="openLightbox(event,'fa-table','DynamoDB Metadata','Stored EXIF & processing metadata')"><i class="fas fa-table"></i><span>DynamoDB Metadata Table</span><span class="img-zoom-tag"><i class="fas fa-expand"></i> Full Size</span></div>
+                        <div class="img-box" onclick="openLightbox(event,'fa-bolt','Lambda Metrics','Invocation counts & duration')"><i class="fas fa-bolt"></i><span>Lambda Execution Metrics</span><span class="img-zoom-tag"><i class="fas fa-expand"></i> Full Size</span></div>
+                    </div>
+                    <div class="close-project"><button onclick="closeProject(event)"><i class="fas fa-times"></i> Close Project</button></div>
+                </div>
+            </div>
+
+            <!-- PROJECT 5 -->
+            <div class="project-card" data-aos="fade-up" data-aos-delay="100" onclick="toggleProject(this,event)">
+                <div class="project-preview">
+                    <div class="project-thumb" style="background:linear-gradient(135deg,#0a2a2a,#1a3a4a)">
+                        <i class="fas fa-shield-halved project-main-icon" style="color:#00cec9"></i>
+                        <div class="github-overlay"><a href="https://github.com/alexjohnson-cloud/cloud-security-automation" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-github"></i></a></div>
+                    </div>
+                    <div class="project-summary">
+                        <h3>Cloud Security & Compliance Automation</h3>
+                        <p>Automated AWS security auditing using Boto3, AWS Config and Lambda with real-time Slack alerts for compliance violations.</p>
+                        <div class="tech-pills"><span>AWS Config</span><span>Boto3</span><span>Lambda</span><span>GuardDuty</span><span>SNS</span></div>
+                    </div>
+                    <div class="expand-hint"><i class="fas fa-chevron-down"></i> <span class="hint-text">Click to expand</span></div>
+                </div>
+                <div class="project-expanded">
+                    <div class="expanded-columns">
+                        <div>
+                            <div class="expanded-section"><h4><i class="fas fa-bullseye"></i> Objective</h4><p>Build an automated security compliance framework that continuously monitors AWS resources for policy violations — including publicly exposed security groups, unencrypted S3 buckets and EBS volumes, overly permissive IAM policies — with instant alerting and auto-remediation.</p></div>
+                            <div class="expanded-section"><h4><i class="fas fa-layer-group"></i> Tech Stack</h4><div class="tech-pills"><span>AWS Config</span><span>Python Boto3</span><span>Lambda</span><span>SNS</span><span>CloudTrail</span><span>GuardDuty</span><span>Security Hub</span><span>Slack Webhook</span><span>Terraform</span><span>EventBridge</span></div></div>
+                            <div class="expanded-section"><h4><i class="fas fa-link"></i> Links</h4><div class="expanded-links"><a href="https://github.com/alexjohnson-cloud/cloud-security-automation" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-github"></i> GitHub Repository</a><a href="#" onclick="event.stopPropagation()"><i class="fas fa-file-pdf"></i> Compliance Report</a></div></div>
+                        </div>
+                        <div>
+                            <div class="expanded-section"><h4><i class="fas fa-user-gear"></i> Role & Responsibilities</h4><ul>
+                                <li>Authored 15+ custom AWS Config rules mapping to CIS Benchmark controls</li>
+                                <li>Developed Python Boto3 scripts for automated resource remediation</li>
+                                <li>Integrated GuardDuty findings with Lambda for real-time threat response</li>
+                                <li>Built Slack notification system via SNS + Lambda webhook integration</li>
+                                <li>Configured EventBridge rules for scheduled compliance scanning</li>
+                                <li>Centralized findings in AWS Security Hub with severity-based routing</li>
+                                <li>Documented incident response runbooks for 10 common violation types</li>
+                            </ul></div>
+                        </div>
+                    </div>
+                    <h4 class="images-heading"><i class="fas fa-images"></i> Project Screenshots</h4>
+                    <div class="project-images">
+                        <div class="img-box" onclick="openLightbox(event,'fa-shield-halved','Security Hub Dashboard','Aggregated findings by severity')"><i class="fas fa-shield-halved"></i><span>Security Hub Dashboard</span><span class="img-zoom-tag"><i class="fas fa-expand"></i> Full Size</span></div>
+                        <div class="img-box" onclick="openLightbox(event,'fa-slack','Slack Alert Sample','Real-time violation notifications')"><i class="fab fa-slack"></i><span>Slack Alert Notifications</span><span class="img-zoom-tag"><i class="fas fa-expand"></i> Full Size</span></div>
+                        <div class="img-box" onclick="openLightbox(event,'fa-list-check','AWS Config Rules','Custom compliance rule set')"><i class="fas fa-list-check"></i><span>AWS Config Rules</span><span class="img-zoom-tag"><i class="fas fa-expand"></i> Full Size</span></div>
+                        <div class="img-box" onclick="openLightbox(event,'fa-triangle-exclamation','GuardDuty Findings','Detected threats & anomalies')"><i class="fas fa-triangle-exclamation"></i><span>GuardDuty Threat Findings</span><span class="img-zoom-tag"><i class="fas fa-expand"></i> Full Size</span></div>
+                    </div>
+                    <div class="close-project"><button onclick="closeProject(event)"><i class="fas fa-times"></i> Close Project</button></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="projects-cta" data-aos="fade-up"><a href="https://github.com/alexjohnson-cloud" target="_blank" class="btn btn-primary"><i class="fab fa-github"></i> View All on GitHub</a></div>
+    </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<!-- <section id="certifications" class="certifications">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up"><span class="section-tag"><i class="fas fa-certificate"></i> Credentials</span><h2 class="section-title">Certifications</h2><div class="section-line"></div></div>
+        <div class="cert-grid">
+            <div class="cert-card" data-aos="flip-left"><div class="cert-badge aws-badge"><i class="fab fa-aws"></i></div><div class="cert-content"><h4>AWS Cloud Practitioner</h4><p class="cert-issuer">Amazon Web Services</p><p class="cert-date"><i class="fas fa-calendar"></i> Jan 2024</p><a href="#" class="cert-link"><i class="fas fa-external-link-alt"></i> Verify</a></div></div>
+            <div class="cert-card" data-aos="flip-left" data-aos-delay="100"><div class="cert-badge aws-badge saa"><i class="fab fa-aws"></i></div><div class="cert-content"><h4>AWS Solutions Architect – Associate</h4><p class="cert-issuer">Amazon Web Services</p><p class="cert-date"><i class="fas fa-calendar"></i> June 2024</p><a href="#" class="cert-link"><i class="fas fa-external-link-alt"></i> Verify</a></div></div>
+            <div class="cert-card" data-aos="flip-left" data-aos-delay="200"><div class="cert-badge azure-badge"><i class="fab fa-microsoft"></i></div><div class="cert-content"><h4>Azure Fundamentals (AZ-900)</h4><p class="cert-issuer">Microsoft</p><p class="cert-date"><i class="fas fa-calendar"></i> March 2024</p><a href="#" class="cert-link"><i class="fas fa-external-link-alt"></i> Verify</a></div></div>
+            <div class="cert-card" data-aos="flip-left" data-aos-delay="300"><div class="cert-badge terraform-badge"><i class="fas fa-cubes"></i></div><div class="cert-content"><h4>HashiCorp Terraform Associate</h4><p class="cert-issuer">HashiCorp</p><p class="cert-date"><i class="fas fa-calendar"></i> Aug 2024</p><a href="#" class="cert-link"><i class="fas fa-external-link-alt"></i> Verify</a></div></div>
+        </div>
+    </div>
+</section> -->
+
+
+<!-- EXPERIENCE -->
+<section id="experience" class="experience">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up"><span class="section-tag"><i class="fas fa-route"></i> My Journey</span><h2 class="section-title">Experience & Education</h2><div class="section-line"></div></div>
+        <div class="timeline">
+            <div class="timeline-item left" data-aos="fade-right"><div class="timeline-content"><div class="timeline-tag internship">Entry Level Job </div><h3>Junior Cloud Engineering</h3><h4><i class="fas fa-building"></i> Great Mind IT Solutions</h4><p class="timeline-date"><i class="fas fa-calendar-alt"></i> May 2026 - Present</p><ul><li>Managed cloud infrastructure using AWS and Microsoft Azure, including virtual machine provisioning, networking, storage configuration, and Linux administration. </li><li>Worked on application containerization using Docker, including building images, managing containers, and preparing applications for deployment. </li><li>Implemented Kubernetes concepts for container orchestration, including pod management, deployments, services, scaling, and application availability.</li><li>Configured CloudWatch & Grafana monitoring dashboards</li></ul></div></div>
+            <div class="timeline-item right" data-aos="fade-left"><div class="timeline-content"><div class="timeline-tag education">Education</div><h3>B.Tech Electronics and Communication </h3><h4><i class="fas fa-university"></i> CMRCET Hyderabad</h4><p class="timeline-date"><i class="fas fa-calendar-alt"></i> 2018 - 2022</p><ul><li>CGPA: 7/10</li><li>Specialization in Electronics, Communication & Computer Networks </li></ul></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up"><span class="section-tag"><i class="fas fa-envelope"></i> Let's Connect</span><h2 class="section-title">Get In Touch</h2><div class="section-line"></div><p class="section-subtitle">I'm actively looking for Cloud Engineer opportunities. My inbox is always open!</p></div>
+        <div class="contact-grid">
+            <div class="contact-info" data-aos="fade-right">
+                <div class="contact-card"><div class="contact-icon"><i class="fas fa-envelope"></i></div><div><h4>Email</h4><span class="contact-detail-link" onclick="openDirectGmail()">kolasaibaba22@gmail.com</span></div></div>
+                <div class="contact-card"><div class="contact-icon"><i class="fas fa-phone"></i></div><div><h4>Phone</h4><p>+91 98765 43210</p></div></div>
+                <div class="contact-card"><div class="contact-icon"><i class="fas fa-location-dot"></i></div><div><h4>Location</h4><p>Hyderabad, India</p></div></div>
+                <div class="contact-availability"><div class="availability-dot"></div><span>Available for full-time positions</span></div>
+            </div>
+            <form class="contact-form" data-aos="fade-left" id="contactForm">
+                <div class="form-group"><div class="input-wrapper"><i class="fas fa-user"></i><input type="text" id="name" placeholder="Your Name" required></div></div>
+                <div class="form-group"><div class="input-wrapper"><i class="fas fa-envelope"></i><input type="email" id="emailInput" placeholder="Your Email" required></div></div>
+                <div class="form-group"><div class="input-wrapper"><i class="fas fa-tag"></i><input type="text" id="subject" placeholder="Subject" required></div></div>
+                <div class="form-group"><div class="input-wrapper textarea-wrapper"><i class="fas fa-comment-dots"></i><textarea id="message" placeholder="Your Message" rows="5" required></textarea></div></div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-submit"><i class="fab fa-google"></i> Send via Gmail</button>
+                    <button type="button" class="btn-copy" id="copyEmailBtn" onclick="copyEmailAddress()"><i class="fas fa-copy"></i> Copy Email</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-brand"><a href="#" class="footer-logo"><span class="logo-bracket">&lt;</span>SB<span class="logo-slash">/</span><span class="logo-bracket">&gt;</span></a><p>Building the future, one cloud at a time.</p></div>
+            <div class="footer-social"><h4>Connect With Me</h4><div class="social-links">
+                <a href="https://www.linkedin.com/in/alexjohnson-cloud" target="_blank" class="social-link linkedin" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://github.com/alexjohnson-cloud" target="_blank" class="social-link github" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="javascript:void(0)" onclick="openDirectGmail()" class="social-link email" title="Email"><i class="fas fa-envelope"></i></a>
+            </div></div>
+            <div class="footer-quick-links"><h4>Quick Links</h4><ul><li><a href="#about">About</a></li><li><a href="#projects">Projects</a></li><li><a href="#contact">Contact</a></li></ul></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2024 Saibaba Kola. Crafted with <i class="fas fa-heart" style="color:#ff4757"></i> & deployed on the Cloud</p><p class="footer-tech">Built with HTML, CSS & JavaScript</p></div>
+    </div>
+</footer>
+
+<button id="backToTop" class="back-to-top"><i class="fas fa-arrow-up"></i></button>
+
+<script>
+const MY_EMAIL = "kolasaibaba22@gmail.com";
+
+//window.addEventListener('load',function(){setTimeout(function(){document.getElementById('loader').classList.add('hidden')},2200)});
+
+(function(){var d=document.querySelector('.cursor-dot'),o=document.querySelector('.cursor-outline');if(!d||!o)return;window.addEventListener('mousemove',function(e){d.style.left=(e.clientX-4)+'px';d.style.top=(e.clientY-4)+'px';o.style.left=(e.clientX-18)+'px';o.style.top=(e.clientY-18)+'px'});document.querySelectorAll('a,button,.skill-box,.project-card,.img-box,.contact-detail-link').forEach(function(el){el.addEventListener('mouseenter',function(){o.style.width='56px';o.style.height='56px';o.style.transform='translate(-24px,-24px)';d.style.transform='scale(1.5)'});el.addEventListener('mouseleave',function(){o.style.width='36px';o.style.height='36px';o.style.transform='translate(-14px,-14px)';d.style.transform='scale(1)'})})})();
+
+(function(){var c=document.getElementById('particleCanvas'),x=c.getContext('2d'),p=[];function r(){c.width=window.innerWidth;c.height=window.innerHeight}r();window.addEventListener('resize',r);function P(){this.x=Math.random()*c.width;this.y=Math.random()*c.height;this.s=Math.random()*2+.5;this.sx=Math.random()*.5-.25;this.sy=Math.random()*.5-.25;this.o=Math.random()*.5+.1}P.prototype.u=function(){this.x+=this.sx;this.y+=this.sy;if(this.x>c.width)this.x=0;if(this.x<0)this.x=c.width;if(this.y>c.height)this.y=0;if(this.y<0)this.y=c.height};P.prototype.d=function(){x.fillStyle='rgba(108,92,231,'+this.o+')';x.beginPath();x.arc(this.x,this.y,this.s,0,Math.PI*2);x.fill()};var n=Math.min(80,Math.floor(window.innerWidth/15));for(var i=0;i<n;i++)p.push(new P());function a(){x.clearRect(0,0,c.width,c.height);p.forEach(function(q){q.u();q.d()});for(var i=0;i<p.length;i++)for(var j=i+1;j<p.length;j++){var dx=p[i].x-p[j].x,dy=p[i].y-p[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<120){x.strokeStyle='rgba(108,92,231,'+(0.08*(1-d/120))+')';x.lineWidth=.5;x.beginPath();x.moveTo(p[i].x,p[i].y);x.lineTo(p[j].x,p[j].y);x.stroke()}}requestAnimationFrame(a)}a()})();
+
+(function(){var r=['Cloud Engineer','DevOps Enthusiast','AWS Solutions Architect','Terraform Developer','Kubernetes Administrator'],ri=0,ci=0,del=false,el=document.getElementById('typedText');function t(){var s=r[ri];if(del){el.textContent=s.substring(0,ci-1);ci--}else{el.textContent=s.substring(0,ci+1);ci++}var sp=del?30:80;if(!del&&ci===s.length){sp=2000;del=true}else if(del&&ci===0){del=false;ri=(ri+1)%r.length;sp=500}setTimeout(t,sp)}t()})();
+
+(function(){var nav=document.getElementById('navbar'),ham=document.getElementById('hamburger'),mob=document.getElementById('mobileMenu'),btt=document.getElementById('backToTop');window.addEventListener('scroll',function(){var y=window.scrollY;nav.classList.toggle('scrolled',y>50);btt.classList.toggle('visible',y>400);updateNav();triggerAOS();animCounters()});btt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});ham.addEventListener('click',function(){ham.classList.toggle('active');mob.classList.toggle('active')});document.querySelectorAll('.mobile-nav-link').forEach(function(l){l.addEventListener('click',function(){ham.classList.remove('active');mob.classList.remove('active')})})})();
+function updateNav(){var s=document.querySelectorAll('section[id]'),p=window.scrollY+100;s.forEach(function(sec){var t=sec.offsetTop,h=sec.offsetHeight,id=sec.getAttribute('id');if(p>=t&&p<t+h)document.querySelectorAll('.nav-link').forEach(function(l){l.classList.remove('active');if(l.getAttribute('href')==='#'+id)l.classList.add('active')})})}
+function triggerAOS(){document.querySelectorAll('[data-aos]').forEach(function(el){var r=el.getBoundingClientRect(),d=parseInt(el.getAttribute('data-aos-delay'))||0;if(r.top<window.innerHeight-80)setTimeout(function(){el.classList.add('aos-animate')},d)})}
+setTimeout(triggerAOS,100);
+var cDone=false;
+function animCounters(){if(cDone)return;var nums=document.querySelectorAll('.stat-number');if(!nums.length)return;var r=nums[0].getBoundingClientRect();if(r.top<window.innerHeight&&r.bottom>0){cDone=true;nums.forEach(function(c){var t=parseInt(c.getAttribute('data-count')),cur=0,inc=t/40;var ti=setInterval(function(){cur+=inc;if(cur>=t){cur=t;clearInterval(ti)}c.textContent=Math.floor(cur)},50)})}}
+
+/* ========== PROJECT EXPAND — FULL WIDTH + VERTICAL ========== */
+function toggleProject(card, e) {
+    if (e) e.stopPropagation();
+    var wasExpanded = card.classList.contains('expanded');
+
+    // Collapse all
+    document.querySelectorAll('.project-card.expanded').forEach(function(c){
+        c.classList.remove('expanded');
+        c.querySelector('.hint-text').textContent = 'Click to expand';
+    });
+
+    if (!wasExpanded) {
+        card.classList.add('expanded');
+        card.querySelector('.hint-text').textContent = 'Click to collapse';
+        setTimeout(function(){
+            var y = card.getBoundingClientRect().top + window.scrollY - 90;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+        }, 150);
+    }
+}
+
+function closeProject(e) {
+    e.stopPropagation();
+    var card = e.target.closest('.project-card');
+    card.classList.remove('expanded');
+    card.querySelector('.hint-text').textContent = 'Click to expand';
+    setTimeout(function(){
+        var y = card.getBoundingClientRect().top + window.scrollY - 90;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+    }, 100);
+}
+
+/* ========== LIGHTBOX FOR FULL-SIZE IMAGES ========== */
+function openLightbox(e, icon, title, desc) {
+    e.stopPropagation();
+    document.getElementById('lbContent').innerHTML =
+        '<i class="fas ' + icon + '"></i><h3>' + title + '</h3><p>' + desc + '</p>' +
+        '<img src="./project/Project11.png" alt="Project Screenshot" style="margin-top:16px;width:100%;border-radius:8px;">';
+    document.getElementById('lightbox').classList.add('active');
+}
+function closeLightbox(){ document.getElementById('lightbox').classList.remove('active'); }
+document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLightbox(); });
+
+/* ========== GMAIL ========== */
+function openDirectGmail(sub, body){
+    var s = sub ? encodeURIComponent(sub) : encodeURIComponent('Inquiry from Cloud Portfolio');
+    var b = body ? encodeURIComponent(body) : encodeURIComponent('Hi Saibaba,\n\nI visited your portfolio and would like to connect...');
+    window.open('https://mail.google.com/mail/?view=cm&fs=1&to=' + MY_EMAIL + '&su=' + s + '&body=' + b, '_blank');
+}
+function copyEmailAddress(){
+    navigator.clipboard.writeText(MY_EMAIL).then(function(){
+        var btn = document.getElementById('copyEmailBtn'), o = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-check" style="color:#00cec9"></i> Copied!';
+        setTimeout(function(){ btn.innerHTML = o; }, 2500);
+    });
+}
+document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var n=document.getElementById('name').value, em=document.getElementById('emailInput').value,
+        s=document.getElementById('subject').value, m=document.getElementById('message').value;
+    openDirectGmail(s + ' — from ' + n, 'Sender: ' + n + '\nEmail: ' + em + '\n\nMessage:\n' + m);
+    var btn=this.querySelector('.btn-submit'), orig=btn.innerHTML;
+    btn.innerHTML='<i class="fas fa-check"></i> Opening Gmail...';
+    btn.style.background='linear-gradient(135deg,#00cec9,#0984e3)';
+    var f=this; setTimeout(function(){ btn.innerHTML=orig; btn.style.background=''; f.reset(); }, 3000);
+});
+
+document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var t=document.querySelector(this.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'})})});
+
+(function(){if(window.innerWidth<=768)return;var nodes=document.querySelectorAll('.arch-node:not(.node-center)'),rot=0;function spin(){rot+=.15;var rad=140,cx=200,cy=200;nodes.forEach(function(n,i){var a=(i*(360/nodes.length)+rot)*(Math.PI/180);n.style.left=(cx+rad*Math.cos(a)-36)+'px';n.style.top=(cy+rad*Math.sin(a)-36)+'px';n.style.position='absolute'});requestAnimationFrame(spin)}spin()})();
+</script>
+
+</body>
+</html>
